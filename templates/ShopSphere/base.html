@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+{% load ShopSphere_template_tags %}
+
+<html>
+    <head lang="en">
+        <meta charset="UTF-8" />
+        <title>
+            ShopSphere - 
+            {% block title_block %}
+                How to Tango with Django!
+            {% endblock %}
+        </title>
+    </head>
+    <body>
+  
+        <div>
+            {% block body_block %}
+            {% endblock %}
+
+            {% block sidebar_block %}
+                {% get_category_list category %}
+            {% endblock %}
+        </div>
+            
+        <hr />
+        <div>
+            <ul>
+                {% if user.is_authenticated %}
+                <!-- Show these links when the user is logged in -->
+                <li><a href="{% url 'ShopSphere:restricted' %}">Restricted Page</a></li>
+                <li><a href="{% url 'ShopSphere:logout' %}">Logout</a></li>
+                <li><a href="{% url 'ShopSphere:add_category' %}">Add New Category</a></li>
+                {% else %}
+                <!-- Show these links when the user is NOT logged in -->
+                <li><a href="{% url 'ShopSphere:register' %}">Sign Up</a></li>
+                <li><a href="{% url 'ShopSphere:login' %}">Login</a></li>
+                {% endif %}
+                <!-- Outside the conditional statements, ALWAYS show -->
+                <li><a href="{% url 'ShopSphere:about' %}">About</a></li>
+                <li><a href="{% url 'ShopSphere:index' %}">Index</a></li>
+            </ul>
+        </div>
+    </body>
+</html>
