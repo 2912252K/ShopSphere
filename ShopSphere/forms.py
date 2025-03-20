@@ -53,3 +53,28 @@ class UserForm(forms.ModelForm):
         model = User
         fields = ('username', 'email', 'password',)
 
+
+from django import forms
+
+from .models import Product, ProductCategory
+
+from django.contrib.auth.models import User
+
+class ProductCategoryForm(forms.ModelForm):
+
+    class Meta:
+
+        model = ProductCategory
+
+        fields = ['name']
+
+class ProductForm(forms.ModelForm):  # Replaces PageForm
+
+    class Meta:
+
+        model = Product
+
+        fields = ['category', 'name', 'description', 'price', 'stock']#, 'image']
+
+
+

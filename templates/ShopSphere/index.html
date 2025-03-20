@@ -17,6 +17,36 @@
     <strong>{{ boldmessage }}</strong><br />
 
     <div>
+    {% if productCategories %}
+    {% if products %}
+    <h2>Products</h2>
+    <ul>
+        {% for procat in productCategories %}
+            <h4> 
+                {{procat.name}}
+            </h4>
+        {% for product in products %}
+        {%if product.category == procat %}
+        <li>
+            <h6>
+                <a href="{% url 'ShopSphere:about' %}">{{ product.name }}</a> <!-- To be changed to similar for above link to procats-->
+            </h6>
+            <a>{{ product.description }}</a>
+            <a>Stock: {{ product.stock }}</a>
+            <a>Price: £{{ product.price }}</a>
+
+        </li>
+        {%endif%}
+        {%endfor%}
+        {% endfor %}
+    </ul>
+    {%else%}
+    <strong>There is no products present</strong>
+    {% endif %}
+    {% endif %}
+    </div>
+
+    <div>
     {%if categories %}
     <h2>Most Liked Categories</h2>
     <ul>
