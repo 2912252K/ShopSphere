@@ -1,3 +1,4 @@
+/* 
 $(document).ready(function() {
     //while searching for products it will provide suggestions
     $('#search-input').keyup(function() {
@@ -10,4 +11,5 @@ $(document).ready(function() {
                 $('#product-listing').html(data);
             })
     });
-});
+}); 
+*/
