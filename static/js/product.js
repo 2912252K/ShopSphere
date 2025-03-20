@@ -1,3 +1,4 @@
+/*
 $(document).ready(function() {
     //adds a product to basket
     $('#add_to_basket').click(function(){
@@ -25,3 +26,4 @@ $(document).ready(function() {
         )
     })
 });
+*/
