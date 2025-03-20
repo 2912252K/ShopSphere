@@ -1,3 +1,4 @@
+/*
 $(document).ready(function() {
     //submits the shipping details and payment details
     //creates an ordernumber with some info and product(s)
@@ -13,3 +14,4 @@ $(document).ready(function() {
         
     })
 });
+*/
