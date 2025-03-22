@@ -3,6 +3,10 @@ from ShopSphere.models import Page, Category
 from django.contrib.auth.models import User
 from ShopSphere.models import UserProfile
 
+from django import forms
+from .models import Product
+from django.contrib.auth.models import User
+
 
 class CategoryForm(forms.ModelForm):
     name = forms.CharField(max_length=Category.NAME_MAX_LENGTH,
@@ -54,27 +58,10 @@ class UserForm(forms.ModelForm):
         fields = ('username', 'email', 'password',)
 
 
-from django import forms
-
-from .models import Product, ProductCategory
-
-from django.contrib.auth.models import User
-
-class ProductCategoryForm(forms.ModelForm):
-
-    class Meta:
-
-        model = ProductCategory
-
-        fields = ['name']
-
-class ProductForm(forms.ModelForm):  # Replaces PageForm
-
+class ProductForm(forms.ModelForm):
+    
     class Meta:
 
         model = Product
 
-        fields = ['category', 'name', 'description', 'price', 'stock']#, 'image']
-
-
-
+        fields = ['category', 'name', 'description', 'price', 'stock', 'image'] 

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+{% extends 'ShopSphere/base.html' %}
+{% load staticfiles %}
+{% load ShopSphere_template_tags %}
+
+{% block title_block %}
+    {% if product %}
+        {{ product.name }}
+    {% else %}
+        Unknown Category
+    {% endif %}
+{% endblock %}
+
+{% block body_block %}
+<h1>{{ product.name }}</h1>
+   {% if product.image %}
+<img src="{{ MEDIA_URL }}{{ product.image }}" alt="{{ product.name }}">
+   {% else %}
+<img src="{% static 'images/default-product-image.png' %}" alt="No image available">
+   {% endif %}
+<p>{{ product.description }}</p>
+<p>Category: {{ product.category }}</p>
+<p>Price: £{{ product.price }}</p>
+<p>Stock: {{product.stock}}</p>
+<a href="{% url 'index' %}">Back to Home</a>
+
+{%endblock%}

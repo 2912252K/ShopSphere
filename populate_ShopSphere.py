@@ -8,7 +8,8 @@ from ShopSphere.models import Category, Page
 
 import random
 from decimal import Decimal
-from ShopSphere.models import ProductCategory, Product
+from ShopSphere.models import Product
+from django.core.files import File
 
 def populate():
     # First, we will create lists of dictionaries containing the pages
@@ -43,7 +44,6 @@ def populate():
     'Django': {'pages': django_pages, 'views': 64, 'likes': 32},
     'Other Frameworks': {'pages': other_pages, 'views': 32, 'likes': 16}, }
     
-    categories = create_categories()
     create_products()
 
     # If you want to add more categories or pages,
@@ -75,52 +75,49 @@ def add_cat(name, views=10, likes=10):
     c.save()
     return c
     
+def get_image_file(image_name):
+    if not image_name:
+        return None
+    image_path = os.path.join('media', image_name)
+    try:
+        return File(open(image_path, 'rb'))
+    except FileNotFoundError:
+        print(f"Image File {image_name} not found")
+        return None
 
-def create_categories():
-   """Create some example product categories."""
-   print('creating product categories')
-   categories = ["Electronics", "Clothing", "Home & Kitchen", "Books", "Toys & Games"]
-   category_objects = []
-   for cat in categories:
-       category, created = ProductCategory.objects.get_or_create(name=cat)
-       category_objects.append(category)
-   return category_objects
-
-def create_products(categories):
+def create_products():
    """Create some example products in each category."""
    print('adding products')
-   product_data = {
-       "Electronics": [
-           {"name": "Smartphone", "description": "Latest model smartphone.", "price": 699.99, "stock": 10},
-           {"name": "Laptop", "description": "Powerful gaming laptop.", "price": 1299.99, "stock": 5},
-       ],
-       "Clothing": [
-           {"name": "T-Shirt", "description": "100% cotton, various sizes.", "price": 19.99, "stock": 50},
-           {"name": "Jeans", "description": "Denim jeans for all sizes.", "price": 49.99, "stock": 30},
-       ],
-       "Home & Kitchen": [
-           {"name": "Coffee Maker", "description": "Brews coffee in minutes.", "price": 89.99, "stock": 15},
-           {"name": "Vacuum Cleaner", "description": "Cordless vacuum cleaner.", "price": 199.99, "stock": 8},
-       ],
-       "Books": [
-           {"name": "Python Programming", "description": "Learn Python with this guide.", "price": 39.99, "stock": 20},
-           {"name": "Django for Beginners", "description": "Step-by-step Django tutorial.", "price": 29.99, "stock": 25},
-       ],
-       "Toys & Games": [
-           {"name": "LEGO Set", "description": "Creative building blocks.", "price": 59.99, "stock": 12},
-           {"name": "Board Game", "description": "Fun for the whole family.", "price": 34.99, "stock": 20},
-       ],
-   }
-   for category in categories:
-       if category.name in product_data:
-           for product in product_data[category.name]:
-               Product.objects.get_or_create(
-                   category=category,
-                   name=product["name"],
-                   description=product["description"],
-                   price=Decimal(product["price"]),
-                   stock=product["stock"]
+   products = [
+        {"category": "Electronics", "name": "Smartphone", "description": "Latest model smartphone.", "price": 699.99, "stock": 10, "image": "smartphone.jpg"},
+        {"category": "Electronics", "name": "Laptop", "description": "Powerful gaming laptop.", "price": 1299.99, "stock": 5, "image": "laptop.jpg"},
+    
+        {"category": "Clothing", "name": "T-Shirt", "description": "100% cotton, various sizes.", "price": 19.99, "stock": 50, "image": "tshirt.jpg"},
+        {"category": "Clothing", "name": "Jeans", "description": "Denim jeans for all sizes.", "price": 49.99, "stock": 30, "image": "jeans.jpg"},
+
+        {"category": "Home & Kitchen", "name": "Coffee Maker", "description": "Brews coffee in minutes.", "price": 89.99, "stock": 15, "image": ""},
+        {"category": "Home & Kitchen", "name": "Vacuum Cleaner", "description": "Cordless vacuum cleaner.", "price": 199.99, "stock": 8, "image": ""},
+
+        {"category": "Books", "name": "Python Programming", "description": "Learn Python with this guide.", "price": 39.99, "stock": 20, "image": ""},
+        {"category": "Books", "name": "Django for Beginners", "description": "Step-by-step Django tutorial.", "price": 29.99, "stock": 25, "image": ""},
+
+        {"category": "Toys & Games", "name": "LEGO Set", "description": "Creative building blocks.", "price": 59.99, "stock": 12, "image": ""},
+        {"category": "Toys & Games", "name": "Board Game", "description": "Fun for the whole family.", "price": 34.99, "stock": 20, "image": ""},
+    ]
+   
+   for product_data in products:
+        image_file = get_image_file(product_data["image"])
+        product, created = Product.objects.get_or_create(
+            category=product_data["category"],
+            name=product_data["name"],
+            description=product_data["description"],
+            price=Decimal(product_data["price"]),
+            stock=product_data["stock"],
                )
+        if created and image_file:
+            product.image = image_file
+            product.save()
+            print(f"Added product: {product.name}")
 
 # Start execution here!
 if __name__ == '__main__':

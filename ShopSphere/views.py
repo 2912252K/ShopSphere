@@ -11,26 +11,28 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from datetime import datetime
 
-from .models import ProductCategory, Product
+from .models import Product
 
 def index(request):
     category_list = Category.objects.order_by('-likes')[:5]
     page_list = Page.objects.order_by('-views')[:5]
 
-    ProductCategories = ProductCategory.objects.all()
-    products = Product.objects.all()
+    product_list = Product.objects.all()
 
     context_dict = {}
     context_dict['boldmessage'] = 'Crunchy, creamy, cookie, candy, cupcake!'
     context_dict['categories'] = category_list
     context_dict['pages'] = page_list
 
-    context_dict['productCategories'] = ProductCategories
-    context_dict['products'] = products
+    context_dict['products'] = product_list
     
     response = render(request, 'ShopSphere/index.html', context=context_dict)
     return response
 
+
+def product_detail(request, product_id):
+    product = get_object_or_404(Product, id=product_id)
+    return render(request, 'ShopSphere/product_detail.html', {'product': product})
 
 def about(request):
     return render(request, 'ShopSphere/about.html')
