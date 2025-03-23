@@ -11,7 +11,8 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from datetime import datetime
 
-from .models import Product
+from .models import Product, Cart, CartItem
+from .cart import Cart
 
 def index(request):
     category_list = Category.objects.order_by('-likes')[:5]
@@ -33,6 +34,31 @@ def index(request):
 def product_detail(request, product_id):
     product = get_object_or_404(Product, id=product_id)
     return render(request, 'ShopSphere/product_detail.html', {'product': product})
+
+def cart_detail(request):
+   """View the cart"""
+   cart = Cart(request)
+   return render(request, 'ShopSphere/cart_detail.html', {'cart': cart})
+
+def add_to_cart(request, product_id):
+   """Add a product to the cart"""
+   product = get_object_or_404(Product, id=product_id)
+   cart = Cart(request)
+   cart.add(product)
+   return redirect('ShopSphere:cart_detail')
+
+def remove_from_cart(request, product_id):
+   """Remove product from the cart"""
+   product = get_object_or_404(Product, id=product_id)
+   cart = Cart(request)
+   cart.remove(product)
+   return redirect('ShopSphere:cart_detail')
+
+def clear_cart(request):
+   """Clear all items from the cart"""
+   cart = Cart(request)
+   cart.clear()
+   return redirect('ShopSphere:cart_detail')
 
 def about(request):
     return render(request, 'ShopSphere/about.html')

@@ -1,0 +1,30 @@
+{% extends 'ShopSphere/base.html' %}
+{% load staticfiles %}
+{% load ShopSphere_template_tags %}
+
+{% block title_block %}
+    ShopSphere Basket
+{% endblock %}
+
+{% block body_block %}
+
+<h1>Your Shopping Cart</h1>
+    {% if cart %}
+    <ul>
+        {% for item in cart %}
+
+        <li>
+        {{ item.name }} - £{{ item.price }} x {{ item.quantity }}
+        <a href="{% url 'ShopSphere:remove_from_cart' item.id %}">Remove</a>
+        </li>
+
+        {% endfor %}
+    </ul>
+    <p>Total: £{{ cart.total_price }}</p>
+    <a href="{% url 'ShopSphere:clear_cart' %}">Clear Cart</a>
+    {% else %}
+    <p>Your cart is empty.</p>
+    {% endif %}
+    <br><a href="{% url 'index' %}">Continue Shopping</a>
+
+{%endblock%}

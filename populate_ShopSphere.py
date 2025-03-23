@@ -92,17 +92,17 @@ def create_products():
         {"category": "Electronics", "name": "Smartphone", "description": "Latest model smartphone.", "price": 699.99, "stock": 10, "image": "smartphone.jpg"},
         {"category": "Electronics", "name": "Laptop", "description": "Powerful gaming laptop.", "price": 1299.99, "stock": 5, "image": "laptop.jpg"},
     
-        {"category": "Clothing", "name": "T-Shirt", "description": "100% cotton, various sizes.", "price": 19.99, "stock": 50, "image": "tshirt.jpg"},
+        {"category": "Clothing", "name": "T-Shirt", "description": "100% cotton, loose-fit.", "price": 19.99, "stock": 50, "image": "tshirt.jpg"},
         {"category": "Clothing", "name": "Jeans", "description": "Denim jeans for all sizes.", "price": 49.99, "stock": 30, "image": "jeans.jpg"},
 
-        {"category": "Home & Kitchen", "name": "Coffee Maker", "description": "Brews coffee in minutes.", "price": 89.99, "stock": 15, "image": ""},
-        {"category": "Home & Kitchen", "name": "Vacuum Cleaner", "description": "Cordless vacuum cleaner.", "price": 199.99, "stock": 8, "image": ""},
+        {"category": "Home & Kitchen", "name": "Coffee Maker", "description": "Brews coffee on the stove in minutes.", "price": 89.99, "stock": 15, "image": "coffee-maker.jpg"},
+        {"category": "Home & Kitchen", "name": "Vacuum Cleaner", "description": "State of the art vacuum cleaner.", "price": 199.99, "stock": 8, "image": "vacuum-cleaner.png"},
 
-        {"category": "Books", "name": "Python Programming", "description": "Learn Python with this guide.", "price": 39.99, "stock": 20, "image": ""},
-        {"category": "Books", "name": "Django for Beginners", "description": "Step-by-step Django tutorial.", "price": 29.99, "stock": 25, "image": ""},
+        {"category": "Books", "name": "Python Programming", "description": "Learn Python with this guide.", "price": 39.99, "stock": 20, "image": "python-book.jpg"},
+        {"category": "Books", "name": "Django for Beginners", "description": "Step-by-step Django tutorial.", "price": 29.99, "stock": 25, "image": "django-book.jpg"},
 
-        {"category": "Toys & Games", "name": "LEGO Set", "description": "Creative building blocks.", "price": 59.99, "stock": 12, "image": ""},
-        {"category": "Toys & Games", "name": "Board Game", "description": "Fun for the whole family.", "price": 34.99, "stock": 20, "image": ""},
+        {"category": "Toys & Games", "name": "LEGO Brick", "description": "Creative building blocks.", "price": 59.99, "stock": 12, "image": "lego.jpg"},
+        {"category": "Toys & Games", "name": "Board Game", "description": "Fun for the whole family.", "price": 34.99, "stock": 20, "image": "board-game.jpg"},
     ]
    
    for product_data in products:

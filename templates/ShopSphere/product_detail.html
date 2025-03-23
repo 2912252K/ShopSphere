@@ -22,6 +22,7 @@
 <p>Category: {{ product.category }}</p>
 <p>Price: £{{ product.price }}</p>
 <p>Stock: {{product.stock}}</p>
+<a href="{% url 'ShopSphere:add_to_cart' product.id %}">Add to Cart</a>
 <a href="{% url 'index' %}">Back to Home</a>
 
 {%endblock%}
