@@ -16,6 +16,30 @@
     <br />
     <strong>{{ boldmessage }}</strong><br />
 
+    
+    {% if products %}
+    <h2>Products</h2>
+    <div class="products">
+    <ul>
+        {% for product in products %}
+        <div class="product">
+        <li>
+            <h6>
+                <a href="{% url 'ShopSphere:product_detail' product.id %}">Product: {{ product.name }}</a> 
+            </h6>
+            <a>{{ product.description }}</a>
+            <a>Stock: {{ product.stock }}</a>
+            <a>Price: £{{ product.price }}</a>
+
+        </li>
+        </div>
+        {% endfor %}
+    </ul>
+    {%else%}
+    <strong>There is no products present</strong>
+    {% endif %}
+    </div>
+
     <div>
     {%if categories %}
     <h2>Most Liked Categories</h2>

@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
 from ShopSphere.models import Page
 from ShopSphere.models import Category
@@ -11,19 +11,54 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from datetime import datetime
 
+from .models import Product, Cart, CartItem
+from .cart import Cart
 
 def index(request):
     category_list = Category.objects.order_by('-likes')[:5]
     page_list = Page.objects.order_by('-views')[:5]
 
+    product_list = Product.objects.all()
+
     context_dict = {}
     context_dict['boldmessage'] = 'Crunchy, creamy, cookie, candy, cupcake!'
     context_dict['categories'] = category_list
     context_dict['pages'] = page_list
+
+    context_dict['products'] = product_list
     
     response = render(request, 'ShopSphere/index.html', context=context_dict)
     return response
 
+
+def product_detail(request, product_id):
+    product = get_object_or_404(Product, id=product_id)
+    return render(request, 'ShopSphere/product_detail.html', {'product': product})
+
+def cart_detail(request):
+   """View the cart"""
+   cart = Cart(request)
+   return render(request, 'ShopSphere/cart_detail.html', {'cart': cart})
+
+def add_to_cart(request, product_id):
+   """Add a product to the cart"""
+   product = get_object_or_404(Product, id=product_id)
+   cart = Cart(request)
+   cart.add(product)
+   return redirect('ShopSphere:cart_detail')
+
+def remove_from_cart(request, product_id):
+   """Remove product from the cart"""
+   product = get_object_or_404(Product, id=product_id)
+   cart = Cart(request)
+   cart.remove(product)
+   return redirect('ShopSphere:cart_detail')
+
+def clear_cart(request):
+   """Clear all items from the cart"""
+   cart = Cart(request)
+   cart.clear()
+   return redirect('ShopSphere:cart_detail')
 
 def about(request):
     return render(request, 'ShopSphere/about.html')
@@ -196,8 +231,8 @@ def user_login(request):
         return render(request, 'ShopSphere/login.html')
 
 @login_required
-def restricted(request):
-    return render(request, 'ShopSphere/restricted.html')
+def recommended(request):
+    return render(request, 'ShopSphere/recommended.html')
 
 # Use the login_required() decorator to ensure only those logged in can
 # access the view.
